@@ -1,0 +1,46 @@
+/* Stile per il layout della pagina admin */
+#custom-admin-form {
+    max-width: 600px;
+    margin-top: 20px;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input, textarea, button {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #0073aa;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005f87;
+}
+
+.image-preview {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.preview-image {
+    max-width: 100px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
