@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    // SELEZIONE IMMAGINI GALLERIA
+  // SELEZIONE IMMAGINI GALLERIA
     document.getElementById("roller-button").addEventListener("click", function () {
         let galleryFrame = wp.media({
             title: "Seleziona immagini per la galleria",
@@ -40,38 +40,37 @@ document.addEventListener("DOMContentLoaded", function () {
             library: { type: "image" },
             multiple: true
         });
-    
-        galleryFrame.on("open", function () {
+
+        /* galleryFrame.on("open", function () {
             let selection = galleryFrame.state().get("selection");
-            let ids = document.getElementById("roller").value.split(",");
-    
-            ids.forEach(id => {
-                if (id) {
-                    let attachment = wp.media.attachment(id);
+            let urls = document.getElementById("roller").value.split(",");
+
+            urls.forEach(url => {
+                if (url) {
+                    // Cerca l'immagine tramite l'URL
+                    let attachment = wp.media.attachment(url);
                     attachment.fetch();
                     selection.add(attachment);
                 }
             });
-        });
-    
+        }); */
+
         galleryFrame.on("select", function () {
             let selection = galleryFrame.state().get("selection");
             let urls = [];
-            let ids = [];
-    
+
             selection.each(function (attachment) {
-                urls.push(attachment.attributes.url);
-                ids.push(attachment.id);
+                urls.push(attachment.attributes.url); // Usa gli URL delle immagini
             });
-    
+
             console.log(urls); // Debug per verificare gli URL selezionati
-    
+
             if (urls.length > 0) {
-                document.getElementById("roller").value = ids.join(",");
-    
+                document.getElementById("roller").value = urls.join(","); // Usa gli URL anziché gli ID
+
                 let previewContainer = document.getElementById("roller-preview");
                 previewContainer.innerHTML = "";
-    
+
                 urls.forEach(url => {
                     let imgElement = document.createElement("img");
                     imgElement.src = url;
@@ -81,15 +80,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
         });
-    
+
         galleryFrame.open();
     });
     
     
     
     
-
-
     document.getElementById("save-button").addEventListener("click", function () {
         let title = document.getElementById("title").value;
         let background = document.getElementById("background").value;

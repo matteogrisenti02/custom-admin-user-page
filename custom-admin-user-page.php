@@ -55,17 +55,19 @@ function custom_admin_create_post() {
     $background = esc_url_raw($_POST['background']);
     $expiration = sanitize_text_field($_POST['expiration']); // Data di scadenza
     $paragraph = sanitize_textarea_field($_POST['paragraph']);
-    $images = isset($_POST['images']) ? $_POST['images'] : ''; // Immagini del Roller
-    $images = explode(',', $images); // Dividi gli URL separati da virgola in un array
+    $images = sanitize_textarea_field($_POST['images']); // URL delle immagini Roller
 
 
-    // Creazione del contenuto del post con il blocco Roller Foto
+    $attributes = [
+        "images" => $images
+    ];
+    
     $roller_foto_block = sprintf(
-        '<!-- wp:create-block/roller-foto {"images":"%s"} /-->',
-        esc_js(json_encode($roller_images)) // Passa le immagini come array JSON
+        '<!-- wp:create-block/roller-foto %s /-->',
+        json_encode($attributes)
     );
 
-    $post_content = "<p>$paragraph</p>" . $roller_foto_block;
+    $post_content = $roller_foto_block . "<p>$paragraph</p>" ;
 
 
     // Creazione del post
